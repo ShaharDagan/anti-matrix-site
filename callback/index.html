@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signed in · RelationshipExpert</title>
+  <meta name="description" content="RelationshipExpert: short videos on dating, breakups, and attraction, explained through psychology.">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<main>
+  <header><a href="../">RelationshipExpert</a></header>
+  <h1>You can close this page.</h1>
+  <p id="msg" class="muted">Sign-in finished.</p>
+  <div id="copy" class="card" hidden>
+    <p style="margin-top:0">If the terminal is asking for it, copy the full URL below and paste it there:</p>
+    <textarea id="url" readonly></textarea>
+    <button id="btn" type="button">Copy URL</button>
+  </div>
+  <script>
+    var q = new URLSearchParams(location.search);
+    if (q.get("error")) {
+      document.getElementById("msg").textContent =
+        "Sign-in failed: " + (q.get("error_description") || q.get("error"));
+    } else if (q.get("code")) {
+      var box = document.getElementById("url");
+      box.value = location.href;
+      document.getElementById("copy").hidden = false;
+      document.getElementById("btn").onclick = function () {
+        box.select();
+        (navigator.clipboard ? navigator.clipboard.writeText(location.href) : Promise.reject())
+          .catch(function () { document.execCommand("copy"); });
+        this.textContent = "Copied";
+      };
+    }
+  </script>
+  <footer>
+    <a href="../">Home</a><a href="../terms.html">Terms of Service</a><a href="../privacy.html">Privacy Policy</a>
+    <br>© 2026 RelationshipExpert · Contact: <a href="mailto:CONTACT_EMAIL">CONTACT_EMAIL</a>
+  </footer>
+</main>
+</body>
+</html>
